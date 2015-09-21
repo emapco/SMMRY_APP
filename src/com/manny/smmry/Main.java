@@ -26,7 +26,10 @@ public class Main {
     private static void getResults(HashMap<String, String> options) throws IOException {
         ArrayList<String> jsonArray = Request.requestSummry(options);
 
-        String json = formatJSON(jsonArray);
+        String json = "";
+        for(String line : jsonArray) {
+            json += line;
+        }
 
         SMMRYAPI results = Deserializer.JsonDeserializer(json);
 
@@ -78,16 +81,16 @@ public class Main {
             requestKeywordCount = null;
         }
 
-        System.out.print("No Quotes? true or false? (summary will not include quotations): ");
+        System.out.print("Remove Quotes? true or false? (summary will not include quotations): ");
         String requestNoQuote = input.nextLine();
-        if (!(requestNoQuote.equals("true"))) {
+        if (!requestNoQuote.equals("true")) {
             System.out.println("Not a valid answer. Skipping parameter setting.");
             requestNoQuote = null;
         }
 
         System.out.print("Include Breaks? true or false? (summary will contain string [BREAK] between each sentence): ");
         String requestBreak = input.nextLine();
-        if (!(requestBreak.equals("true"))) {
+        if (!requestBreak.equals("true")) {
             System.out.println("Not a valid answer. Skipping parameter setting.");
             requestBreak = null;
         }
@@ -121,13 +124,5 @@ public class Main {
             return false;
         }
         return true;
-    }
-
-    public static String formatJSON(ArrayList<String> jsonArray) {
-        String json = "";
-        for(String line : jsonArray) {
-            json += line;
-        }
-        return json;
     }
 }
