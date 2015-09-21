@@ -1,0 +1,78 @@
+API
+
+SMMRY is accessible by an API. Developers are able to implement SMMRY into applications that may require
+a summary of a webpage or variable. Developers need to generate an API key to access this feature.
+
+The API request must be made to http://api.smmry.com. The response is encoded in JSON.
+
+Here are the possible parameters placed in the request URL.
+&SM_API_KEY=N       // Mandatory, N represents your registered API key.
+&SM_URL=X           // Optional, X represents the webpage to summarize.
+&SM_LENGTH=N        // Optional, N represents the number of sentences returned, default is 7
+&SM_KEYWORD_COUNT=N // Optional, N represents how many of the top keywords to return
+&SM_QUOTE_AVOID     // Optional, summary will not include quotations
+&SM_WITH_BREAK      // Optional, summary will contain string [BREAK] between each sentence
+
+Here are the possible indexes of the array returned by JSON.
+$result = json_decode($response, true);
+$result['sm_api_message'];        // Contains notices, warnings, and error messages.
+$result['sm_api_character_count'];// Contains the amount of characters of summary content that might have been returned
+$result['sm_api_title'];          // Contains the title when possible
+$result['sm_api_content'];        // Contains the summary
+$result['sm_api_keyword_array'];  // Contains an array of the top ranked keywords in descending order
+$result['sm_api_error'];          // Contains error number to indicate kind of error
+
+//Error Number Descriptions:
+
+//0 - Internal server problem which isn't your fault
+//Recommended behaviour is to try again later
+
+//1 = Incorrect submission variables
+//Cease making API requests and review documentation
+
+//2 - Intentional restriction (low credits/disabled API key/banned API key)
+//Cease making API requests until you visit the partner page to lift the restriction
+
+//3 - Summarization error
+//Review the length and validity of the articles being submitted if this error occurs frequently.
+cURL or an equivalent function/library must either send the article variable as POST data
+labeled sm_api_input or specify a URL with &SM_URL=X. If both are given the latter is used.
+
+Here is an example of PHP using cURL to summarize a variable:
+$long_article = "Long article text goes here";
+
+$ch = curl_init("http://api.smmry.com/&SM_API_KEY=NNNNNNNNNN&SM_LENGTH=14&SM_WITH_BREAK");
+// IMPORTANT!
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("Expect:"));
+// IMPORTANT! Without ^this^ any article over 1000 characters will make SMMRY throw a 417 http error
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "sm_api_input=".$long_article);// Your variable is sent as POST
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
+curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+$return = json_decode(curl_exec($ch), true);//You're summary is now stored in $return['sm_api_content'].
+curl_close($ch);
+And here we summarize an external webpage:
+$ch = curl_init("http://api.smmry.com/&SM_API_KEY=NNNNNNNNNN&SM_LENGTH=5&SM_URL=http://example.com/article");
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,20);
+curl_setopt($ch, CURLOPT_TIMEOUT,20);
+$return = json_decode(curl_exec($ch), true);//You're summary is now stored in $return['sm_api_content'].
+curl_close($ch);
+The maximum number of sentences returned is 40. When using SM_WITH_BREAK, make sure to replace
+the [BREAK] strings with whatever you want to seperate each sentence ('/n', '<br>' etc).
+Also, make sure any webpage URL sent to summarize is accessible to SMMRY, pages requiring authentication won't do.
+
+
+There are two active modes of the API, Limited and Full:
+
+Limited: A limit of 100 free API requests can be made daily, and each request must be at least 10 seconds apart.
+If a request was made too soon, the API script will wait the required time until fulfilling the request.
+
+Full: An unlimited amount of requests can be made with no articifical time limit in between. 1 credit costs
+$0.001, or a tenth of a cent. It costs approximately 1 credit per 500 characters returned by the
+API (only summary content is counted). It costs an additional 8 credits if the article has not been previously
+submitted and cached by the algorithm, that way re-summarizing the same article is cheaper.
+When credit costs are being calculated, decimals are rounded upwards.
