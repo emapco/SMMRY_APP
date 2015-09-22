@@ -1,7 +1,5 @@
 package com.manny.smmry;
 
-import oracle.jrockit.jfr.JFR;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,11 +14,8 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            JFrame appFrame = new JFrame("Summarize!");
-            appFrame.setContentPane(new App().);
-            appFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            appFrame.pack();
-            appFrame.setVisible(true);
+            App app = new App();
+            app.setSize(650,650);
             //HashMap<String, String> options = getQuery();
             //getResults(options);
         } catch (Exception e) {
@@ -41,7 +36,7 @@ public class Main {
 
         SMMRYAPI results = Deserializer.JsonDeserializer(json);
 
-        printResults(results);
+        //printResults(results);
     }
 
     //Print to file and displays console the response

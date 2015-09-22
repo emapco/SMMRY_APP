@@ -34,7 +34,7 @@ public class Request {
 
         URL summry = new URL(strSummry);
 
-        System.out.println("requesting summary");
+        System.out.println("Requesting Summary");
 
         URLConnection sy = summry.openConnection();
         BufferedReader in = new BufferedReader(
