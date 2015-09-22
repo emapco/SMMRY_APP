@@ -2,7 +2,7 @@ package com.manny.smmry;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.border.StrokeBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -20,7 +20,7 @@ public class App extends JFrame {
     private JCheckBox includeBreaksCheckBox;
     private JTabbedPane tabbedPane;
     private JTextPane summaryTextPane;
-    private JTextPane characterCountTextPane;
+    private JTextPane summaryInfoTextPane;
     private JTextPane APIMessages;
     private JTextPane titleTextPane;
     private JPanel rootPanel;
@@ -58,38 +58,59 @@ public class App extends JFrame {
                         parameters.put("requestKeywordCount", keywordTF.getText());
                 }
 
-                try {
-                    ArrayList<String> jsonArray = Request.requestSummry(parameters);
+                SMMRYAPI response = requestSmmry(parameters);
 
-                    String json = "";
-                    for (String line : jsonArray) {
-                        json += line;
-                    }
+                String title = response.get_sm_api_title();
+                String content = response.get_sm_api_content();
+                String characterCount = response.get_sm_api_character_count();
+                String APILimit = response.get_sm_api_limitation();
+                String APIError = response.get_sm_api_error();
+                String APIMessage = response.get_sm_api_message();
+                String[] keywordsArray = response.get_sm_api_keyword_array();
+                int creditCost = response.get_sm_api_credit_cost();
+                String creditBalance = response.get_sm_api_credit_balance();
 
-                    SMMRYAPI response = Deserializer.JsonDeserializer(json);
 
-                    String title = response.get_sm_api_title();
-                    String content = response.get_sm_api_content();
-                    String characterCount = response.get_sm_api_character_count();
-                    String APILimit = response.get_sm_api_limitation();
-                    String APIError = response.get_sm_api_error();
-                    String APIMessage = response.get_sm_api_message();
-
-                    String APIText = "APILimit: " + APILimit
-                            + "\nAPIError: " + APIError + "\nAPIMessage: " + APIMessage;
-
-                    titleTextPane.setText(title);
-                    summaryTextPane.setText(content);
-                    characterCountTextPane.setText(characterCount);
-                    APIMessages.setText(APIText);
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
+                StringBuilder strBuilder = new StringBuilder();
+                for(String keyword : keywordsArray) {
+                    strBuilder.append(keyword);
+                    strBuilder.append(", ");
                 }
+
+                String keywordsString = strBuilder.toString().substring(0, strBuilder.length()-2);
+
+
+                String summaryInfo = "Character Count: " + characterCount
+                        + "\nKeywords: " + keywordsString;
+
+                String APIText = "APILimit: " + APILimit
+                        + "\nAPIError: " + APIError + "\nAPIMessage: " + APIMessage
+                        + "\nCredit Cost: " + creditCost + "\nCredit Balance: " + creditBalance;
+
+
+                titleTextPane.setText(title);
+                summaryTextPane.setText(content);
+                summaryInfoTextPane.setText(summaryInfo);
+                APIMessages.setText(APIText);
 
             }
         });
 
         setVisible(true);
+    }
+
+    private static SMMRYAPI requestSmmry(HashMap<String, String> parameters) {
+        try {
+            ArrayList<String> jsonArray = Request.requestSummry(parameters);
+            String json = "";
+            for (String line : jsonArray)
+                json += line;
+
+            return Deserializer.JsonDeserializer(json);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return null;
     }
 
     private static boolean isNumeric(String number) {

@@ -8,7 +8,9 @@ public class SMMRYAPI {
     public String sm_api_limitation;
     public String sm_api_message;
     public String sm_api_error;
-    public String sm_api_keyword_array;
+    public String[] sm_api_keyword_array;
+    public int sm_api_credit_cost;
+    public String sm_api_credit_balance;
 
     public String get_sm_api_content() {
         return sm_api_content;
@@ -34,7 +36,15 @@ public class SMMRYAPI {
         return sm_api_error;
     }
 
-    public String get_sm_api_keyword_array() {
+    public String[] get_sm_api_keyword_array() {
         return sm_api_keyword_array;
+    }
+
+    public int get_sm_api_credit_cost() {
+        return sm_api_credit_cost;
+    }
+
+    public String get_sm_api_credit_balance() {
+        return sm_api_credit_balance;
     }
 }
