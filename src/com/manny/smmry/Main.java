@@ -1,5 +1,8 @@
 package com.manny.smmry;
 
+import oracle.jrockit.jfr.JFR;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
@@ -13,8 +16,13 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            HashMap<String, String> options = getQuery();
-            getResults(options);
+            JFrame appFrame = new JFrame("Summarize!");
+            appFrame.setContentPane(new App().);
+            appFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            appFrame.pack();
+            appFrame.setVisible(true);
+            //HashMap<String, String> options = getQuery();
+            //getResults(options);
         } catch (Exception e) {
             e.printStackTrace();
         }
