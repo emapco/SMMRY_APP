@@ -83,6 +83,7 @@ public class App extends JFrame {
 
         try {
             SMMRYAPI response = Request.requestSummry(parameters);
+
             String title = response.get_sm_api_title();
             String content = response.get_sm_api_content();
             String characterCount = response.get_sm_api_character_count();
