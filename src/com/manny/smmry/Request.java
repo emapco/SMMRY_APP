@@ -15,22 +15,24 @@ public class Request {
     private static String APIRequestBreak = "&SM_WITH_BREAK"; // Optional, summary will contain string [BREAK] between each sentence
 
     //Make an API call to SUMMRY and returns it response in a formatted json string.
-    public static ArrayList<String> requestSummry (HashMap<String, String> parameters) throws IOException {
+    public static SMMRYAPI requestSummry (HashMap<String, String> parameters) throws IOException {
         String url = parameters.get("url");
         String requestLength = parameters.get("requestLength");
         String requestKeywordCount = parameters.get("requestKeywordCount");
         String requestNoQuote = parameters.get("requestNoQuote");
         String requestBreak = parameters.get("requestBreak");
 
-        String strSummry = baseURL + APIKeyLink + APIRequestURL + url;
-        if (requestLength != null)
-            strSummry += APIRequestLength + requestLength;
+        String strSummry = baseURL + APIKeyLink;
         if (requestKeywordCount != null)
             strSummry += APIRequestKeywordCount + requestKeywordCount;
-        if (requestNoQuote != null)
+        if (requestLength != null)
+            strSummry += APIRequestLength + requestLength;
+        if (requestNoQuote.equals("true"))
             strSummry += APIRequestNoQuote;
-        if (requestBreak != null)
+        if (requestBreak.equals("true"))
             strSummry += APIRequestBreak;
+        if (url != null)
+            strSummry += APIRequestURL + url;
 
         URL summry = new URL(strSummry);
         System.out.println(summry);
@@ -40,14 +42,19 @@ public class Request {
                 new InputStreamReader(sy.getInputStream()));
 
         String inputLine;
-        ArrayList<String> json = new ArrayList<String>();
+        ArrayList<String> jsonArray = new ArrayList<>();
 
         while ((inputLine = in.readLine()) != null) {
-            json.add(inputLine);
+            jsonArray.add(inputLine);
         }
         in.close();
 
-        System.out.println(json);
-        return json;
+        System.out.println(jsonArray);
+
+        String json = "";
+        for (String line : jsonArray)
+            json += line;
+
+        return Deserializer.JsonDeserializer(json);
     }
 }

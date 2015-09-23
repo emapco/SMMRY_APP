@@ -40,7 +40,7 @@
               <toolTipText value="Specify the number of sentences returned."/>
             </properties>
           </component>
-          <component id="bc83a" class="javax.swing.JLabel">
+          <component id="bc83a" class="javax.swing.JLabel" binding="urlLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -49,7 +49,7 @@
               <toolTipText value="URL to the article to summarize."/>
             </properties>
           </component>
-          <component id="4072a" class="javax.swing.JLabel">
+          <component id="4072a" class="javax.swing.JLabel" binding="sentenceLengthLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -58,7 +58,7 @@
               <toolTipText value="Specify the number of sentences returned."/>
             </properties>
           </component>
-          <component id="b0fb5" class="javax.swing.JLabel">
+          <component id="b0fb5" class="javax.swing.JLabel" binding="keywordCountLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -122,7 +122,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="2796e" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="2796e" binding="summaryPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Summary"/>
@@ -140,7 +140,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="39dbc" class="javax.swing.JLabel">
+                  <component id="39dbc" class="javax.swing.JLabel" binding="titleLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -148,7 +148,7 @@
                       <text value="Title:"/>
                     </properties>
                   </component>
-                  <component id="df23" class="javax.swing.JLabel">
+                  <component id="df23" class="javax.swing.JLabel" binding="summaryLabel">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -168,7 +168,7 @@
                   </component>
                 </children>
               </grid>
-              <grid id="21243" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="21243" binding="infoPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="Info"/>
@@ -192,7 +192,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="33953" class="javax.swing.JLabel">
+                  <component id="33953" class="javax.swing.JLabel" binding="summaryInfoLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -200,12 +200,12 @@
                       <text value="Summary Info:"/>
                     </properties>
                   </component>
-                  <component id="c2b3c" class="javax.swing.JLabel">
+                  <component id="c2b3c" class="javax.swing.JLabel" binding="apiMessagesLabel">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="API Messages"/>
+                      <text value="API Messages:"/>
                     </properties>
                   </component>
                 </children>

@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -27,6 +26,15 @@ public class App extends JFrame {
     private JPanel rootPanel;
     private JPanel settingPanel;
     private JPanel textPanel;
+    private JLabel urlLabel;
+    private JLabel sentenceLengthLabel;
+    private JLabel keywordCountLabel;
+    private JPanel summaryPanel;
+    private JPanel infoPanel;
+    private JLabel titleLabel;
+    private JLabel summaryLabel;
+    private JLabel summaryInfoLabel;
+    private JLabel apiMessagesLabel;
 
     public App()  {
         setContentPane(rootPanel);
@@ -64,7 +72,6 @@ public class App extends JFrame {
         parameters.put("url", urlTF.getText());
         parameters.put("requestNoQuote", Boolean.toString(removeQuotesCheckBox.isSelected()));
         parameters.put("requestBreak", Boolean.toString(includeBreaksCheckBox.isSelected()));
-        parameters.put("requestKeywordCount", keywordTF.getText());
         if (!lengthTF.getText().isEmpty()) {
             if (isNumeric(lengthTF.getText()))
                 parameters.put("requestLength", lengthTF.getText());
@@ -74,54 +81,42 @@ public class App extends JFrame {
                 parameters.put("requestKeywordCount", keywordTF.getText());
         }
 
-
-        SMMRYAPI response = requestSmmry(parameters);
-        String title = response.get_sm_api_title();
-        String content = response.get_sm_api_content();
-        String characterCount = response.get_sm_api_character_count();
-        String APILimit = response.get_sm_api_limitation();
-        String APIError = response.get_sm_api_error();
-        String APIMessage = response.get_sm_api_message();
-        int creditCost = response.get_sm_api_credit_cost();
-        String creditBalance = response.get_sm_api_credit_balance();
-        String[] keywordsArray = response.get_sm_api_keyword_array();
-
-
-        String keywordsString = "";
-        if (keywordsArray != null && keywordsArray.length>0) {
-            for(String keyword : keywordsArray) {
-                keywordsString += keyword + ", ";
-            }
-            keywordsString = keywordsString.substring(0, keywordsString.length()-2);
-        }
-
-
-        String summaryInfo = "Character Count: " + characterCount
-                + "\nKeywords: " + keywordsString;
-
-        String APIText = "APILimit: " + APILimit
-                + "\nAPIError: " + APIError + "\nAPIMessage: " + APIMessage
-                + "\nCredit Cost: " + creditCost + "\nCredit Balance: " + creditBalance;
-
-
-        titleTextPane.setText(title);
-        summaryTextPane.setText(content);
-        summaryInfoTextPane.setText(summaryInfo);
-        APIMessages.setText(APIText);
-    }
-
-    private static SMMRYAPI requestSmmry(HashMap<String, String> parameters) {
         try {
-            ArrayList<String> jsonArray = Request.requestSummry(parameters);
+            SMMRYAPI response = Request.requestSummry(parameters);
+            String title = response.get_sm_api_title();
+            String content = response.get_sm_api_content();
+            String characterCount = response.get_sm_api_character_count();
+            String APILimit = response.get_sm_api_limitation();
+            String APIError = response.get_sm_api_error();
+            String APIMessage = response.get_sm_api_message();
+            int creditCost = response.get_sm_api_credit_cost();
+            String creditBalance = response.get_sm_api_credit_balance();
+            String[] keywordsArray = response.get_sm_api_keyword_array();
 
-            String json = "";
-            for (String line : jsonArray)
-                json += line;
 
-            return Deserializer.JsonDeserializer(json);
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            return null;
+            String keywordsString = "";
+            if (keywordsArray != null && keywordsArray.length>0) {
+                for(String keyword : keywordsArray) {
+                    keywordsString += keyword + ", ";
+                }
+                keywordsString = keywordsString.substring(0, keywordsString.length()-2);
+            }
+
+
+            String summaryInfo = "Character Count: " + characterCount
+                    + "\nKeywords: " + keywordsString;
+
+            String APIText = "APILimit: " + APILimit
+                    + "\nAPIError: " + APIError + "\nAPIMessage: " + APIMessage
+                    + "\nCredit Cost: " + creditCost + "\nCredit Balance: " + creditBalance;
+
+
+            titleTextPane.setText(title);
+            summaryTextPane.setText(content);
+            summaryInfoTextPane.setText(summaryInfo);
+            APIMessages.setText(APIText);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
