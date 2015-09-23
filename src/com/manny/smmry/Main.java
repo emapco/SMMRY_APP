@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             App app = new App();
-            app.setSize(650,650);
+            app.setSize(700,700);
         } catch (Exception e) {
             e.printStackTrace();
         }
