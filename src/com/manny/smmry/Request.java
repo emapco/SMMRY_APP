@@ -11,7 +11,7 @@ public class Request {
     private static String APIRequestURL = "&SM_URL="; // Optional, X represents the webpage to summarize.
     private static String APIRequestLength = "&SM_LENGTH="; // Optional, N represents the number of sentences returned, default is 7
     private static String APIRequestKeywordCount = "&SM_KEYWORD_COUNT="; // Optional, N represents how many of the top keywords to return
-    private static String APIRequestNoQuote = "&SM_QUOTE_AVOID "; // Optional, summary will not include quotations
+    private static String APIRequestNoQuote = "&SM_QUOTE_AVOID"; // Optional, summary will not include quotations
     private static String APIRequestBreak = "&SM_WITH_BREAK"; // Optional, summary will contain string [BREAK] between each sentence
 
     //Make an API call to SUMMRY and returns it response in a formatted json string.
@@ -28,13 +28,12 @@ public class Request {
         if (requestKeywordCount != null)
             strSummry += APIRequestKeywordCount + requestKeywordCount;
         if (requestNoQuote != null)
-            strSummry += APIRequestNoQuote + requestNoQuote;
+            strSummry += APIRequestNoQuote;
         if (requestBreak != null)
-            strSummry += APIRequestBreak + requestBreak;
+            strSummry += APIRequestBreak;
 
         URL summry = new URL(strSummry);
-
-        System.out.println("Requesting Summary");
+        System.out.println(summry);
 
         URLConnection sy = summry.openConnection();
         BufferedReader in = new BufferedReader(
@@ -48,6 +47,7 @@ public class Request {
         }
         in.close();
 
+        System.out.println(json);
         return json;
     }
 }

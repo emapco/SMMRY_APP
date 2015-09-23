@@ -9,7 +9,7 @@ public class Deserializer {
 
     public static SMMRYAPI JsonDeserializer(String json) throws IOException {
         Gson gson = new GsonBuilder().serializeNulls().create();
-
+        
         return gson.fromJson(json, SMMRYAPI.class);
     }
 }
