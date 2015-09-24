@@ -10,7 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-
 public class App extends JFrame {
     private JTextField urlTF;
     private JTextField lengthTF;
