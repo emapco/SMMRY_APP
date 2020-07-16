@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Request {
     private static String baseURL = "http://api.smmry.com/";
-    private static String APIKeyLink = "&SM_API_KEY=954D48A067"; // Mandatory, N represents your registered API key.
+    private static String APIKeyLink = "&SM_API_KEY=N"; // Mandatory, N represents your registered API key.
     private static String APIRequestURL = "&SM_URL="; // Optional, X represents the webpage to summarize.
     private static String APIRequestLength = "&SM_LENGTH="; // Optional, N represents the number of sentences returned, default is 7
     private static String APIRequestKeywordCount = "&SM_KEYWORD_COUNT="; // Optional, N represents how many of the top keywords to return
