@@ -40,7 +40,7 @@ public class Request {
         return strSmmry;
     }
           
-    // Makes an API call to SUMMRY and returns the response as a formatted json string.
+    // Makes an API call to SUMMRY and returns the response as a SMMRYAPI object
     public static SMMRYAPI requestSummry (HashMap<String, String> parameters) throws IOException {
         String strSmmry = urlBuilder(parameters);
         URL summry = new URL(strSmmry);
