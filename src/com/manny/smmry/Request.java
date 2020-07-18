@@ -10,7 +10,7 @@ Generates url string for API call, creates connections, parses results and retur
 **/
 public class Request {
     private static String baseURL = "http://api.smmry.com/";
-    private static String APIKeyLink = "&SM_API_KEY=N"; // Mandatory, N represents your registered API key.
+    private static String APIKeyLink = "&SM_API_KEY=&SM_API_KEY=954D48A067"; // Mandatory, N represents your registered API key.
     private static String APIRequestURL = "&SM_URL="; // Optional, X represents the webpage to summarize.
     private static String APIRequestLength = "&SM_LENGTH="; // Optional, N represents the number of sentences returned, default is 7
     private static String APIRequestKeywordCount = "&SM_KEYWORD_COUNT="; // Optional, N represents how many of the top keywords to return
@@ -18,31 +18,32 @@ public class Request {
     private static String APIRequestBreak = "&SM_WITH_BREAK"; // Optional, summary will contain string [BREAK] between each sentence
 
     // Makes url string for api call
-    private static String urlBuilder (HashMap<String, String> parameters):
+    public static String urlBuilder (HashMap<String, String> parameters) {
         // gets strings from UI
         String url = parameters.get("url");
         String requestLength = parameters.get("requestLength");
         String requestKeywordCount = parameters.get("requestKeywordCount");
         String requestNoQuote = parameters.get("requestNoQuote");
         String requestBreak = parameters.get("requestBreak");
-    
+
         String strSmmry = baseURL + APIKeyLink;
-            if (requestKeywordCount != null)
-                strSmmry += APIRequestKeywordCount + requestKeywordCount;
-            if (requestLength != null)
-                strSmmry += APIRequestLength + requestLength;
-            if (requestNoQuote.equals("true"))
-                strSmmry += APIRequestNoQuote;
-            if (requestBreak.equals("true"))
-                strSmmry += APIRequestBreak;
-            if (url != null)
-                strSmmry += APIRequestURL + url;
-        return strSmmry
+        if (requestKeywordCount != null)
+            strSmmry += APIRequestKeywordCount + requestKeywordCount;
+        if (requestLength != null)
+            strSmmry += APIRequestLength + requestLength;
+        if (requestNoQuote.equals("true"))
+            strSmmry += APIRequestNoQuote;
+        if (requestBreak.equals("true"))
+            strSmmry += APIRequestBreak;
+        if (url != null)
+            strSmmry += APIRequestURL + url;
+        return strSmmry;
+    }
           
     // Makes an API call to SUMMRY and returns the response as a formatted json string.
     public static SMMRYAPI requestSummry (HashMap<String, String> parameters) throws IOException {
-        strSmmry = urlBuilder()
-        URL summry = new URL(strSummry);
+        String strSmmry = urlBuilder(parameters);
+        URL summry = new URL(strSmmry);
 
         URLConnection sy = summry.openConnection();
         BufferedReader in = new BufferedReader(
