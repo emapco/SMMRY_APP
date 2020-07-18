@@ -17,8 +17,15 @@ public class Request {
     private static String APIRequestNoQuote = "&SM_QUOTE_AVOID"; // Optional, summary will not include quotations
     private static String APIRequestBreak = "&SM_WITH_BREAK"; // Optional, summary will contain string [BREAK] between each sentence
 
-    //Makes url string for api call
-    private static String urlBuilder ():
+    // Makes url string for api call
+    private static String urlBuilder (HashMap<String, String> parameters):
+        // gets strings from UI
+        String url = parameters.get("url");
+        String requestLength = parameters.get("requestLength");
+        String requestKeywordCount = parameters.get("requestKeywordCount");
+        String requestNoQuote = parameters.get("requestNoQuote");
+        String requestBreak = parameters.get("requestBreak");
+    
         String strSmmry = baseURL + APIKeyLink;
             if (requestKeywordCount != null)
                 strSmmry += APIRequestKeywordCount + requestKeywordCount;
@@ -31,15 +38,9 @@ public class Request {
             if (url != null)
                 strSmmry += APIRequestURL + url;
         return strSmmry
-    
-    // Make an API call to SUMMRY and returns the response as a formatted json string.
+          
+    // Makes an API call to SUMMRY and returns the response as a formatted json string.
     public static SMMRYAPI requestSummry (HashMap<String, String> parameters) throws IOException {
-        String url = parameters.get("url");
-        String requestLength = parameters.get("requestLength");
-        String requestKeywordCount = parameters.get("requestKeywordCount");
-        String requestNoQuote = parameters.get("requestNoQuote");
-        String requestBreak = parameters.get("requestBreak");
-
         strSmmry = urlBuilder()
         URL summry = new URL(strSummry);
 
